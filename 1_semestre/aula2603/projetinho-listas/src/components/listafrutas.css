@@ -1,0 +1,44 @@
+/* src/components/listaFrutas.css */
+.lista-frutas-root {
+  width: min(100%, 440px);
+  margin: 24px auto;
+  padding: 16px;
+  border: 1px solid #d4d4d4;
+  border-radius: 12px;
+  background: #f9fff9;
+  box-shadow: 0 6px 18px rgba(255, 255, 255, 0.08);
+}
+
+.lista-frutas-titulo {
+  margin: 0 0 14px;
+  font-size: 1.9rem;
+  color: #082335;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+.lista-frutas-ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.fruta-item {
+  display: block;
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 9px;
+  border: 1px solid #000000;
+  background: linear-gradient(130deg, #c9c8c8 0%, #868686 100%);
+  color: #1f414e;
+  font-weight: 600;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.fruta-item:hover {
+  transform: translateX(4px);
+  border-color: #000000;
+  background: linear-gradient(130deg, #4400ff 0%, #c7e6ff 100%);
+}

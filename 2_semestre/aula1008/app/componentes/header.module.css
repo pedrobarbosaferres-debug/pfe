@@ -1,0 +1,150 @@
+.headerContainer {
+  background-color: var(--bg-primary);
+  border-bottom: 2px solid var(--border-dark);
+  margin-bottom: 20px;
+}
+
+/* Top Utility Bar */
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 20px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-color);
+  background-color: #f4f2ed;
+}
+
+.topBarLeft, .topBarRight {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.topBarItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.quoteUp {
+  color: #15803d;
+  font-weight: 600;
+}
+
+.quoteDown {
+  color: var(--accent-red);
+  font-weight: 600;
+}
+
+/* Main Masthead */
+.masthead {
+  text-align: center;
+  padding: 20px 15px 15px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.subHeaderInfo {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
+  font-weight: 900;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  color: var(--text-main);
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.tagline {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 15px;
+}
+
+.doubleDivider {
+  border-top: 3px double var(--border-dark);
+  margin: 10px 0 0 0;
+}
+
+/* Main Nav Bar */
+.navBar {
+  border-top: 1px solid var(--border-dark);
+  border-bottom: 1px solid var(--border-dark);
+  background-color: var(--bg-card);
+}
+
+.navList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  list-style: none;
+  padding: 10px 15px;
+  flex-wrap: wrap;
+}
+
+.navLink {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-main);
+  transition: color 0.2s ease;
+  padding: 4px 0;
+  position: relative;
+}
+
+.navLink:hover {
+  color: var(--accent-red);
+}
+
+.activeLink {
+  color: var(--accent-red);
+  border-bottom: 2px solid var(--accent-red);
+}
+
+/* Ticker Bar */
+.tickerBar {
+  background-color: var(--accent-red);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  padding: 6px 20px;
+  gap: 12px;
+}
+
+.tickerTag {
+  background-color: #000000;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+.tickerText {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
