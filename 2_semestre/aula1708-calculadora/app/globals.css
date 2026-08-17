@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg-gradient: radial-gradient(circle at 50% 20%, #1a1d2d 0%, #0d0e15 100%);
+  --calc-body-bg: linear-gradient(145deg, #1f2333, #151722);
+  --calc-border: rgba(255, 255, 255, 0.08);
+  --calc-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 0, 0, 0.5);
+  
+  --screen-bg: #090c10;
+  --screen-text: #00ff88;
+  --screen-text-glow: 0 0 10px rgba(0, 255, 136, 0.4);
+  --screen-subtext: #6b7280;
+  
+  --btn-num-bg: linear-gradient(145deg, #2a2e40, #222534);
+  --btn-num-hover: linear-gradient(145deg, #32374d, #282c3e);
+  --btn-num-text: #f3f4f6;
+  
+  --btn-op-bg: linear-gradient(145deg, #ff9500, #e08200);
+  --btn-op-hover: linear-gradient(145deg, #ffa726, #eb8c00);
+  --btn-op-text: #ffffff;
+  
+  --btn-fn-bg: linear-gradient(145deg, #3a3f58, #2e3347);
+  --btn-fn-hover: linear-gradient(145deg, #454b69, #353a52);
+  --btn-fn-text: #60a5fa;
+
+  --btn-equal-bg: linear-gradient(145deg, #3b82f6, #2563eb);
+  --btn-equal-hover: linear-gradient(145deg, #60a5fa, #1d4ed8);
+  --btn-equal-text: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  user-select: none;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: 'Plus Jakarta Sans', var(--font-geist-sans), sans-serif;
+  background: var(--bg-gradient);
+  color: #f3f4f6;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
