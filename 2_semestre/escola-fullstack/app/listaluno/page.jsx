@@ -15,77 +15,55 @@ export default function ListaAlunos() {
       rm: "RM-2026-0101",
       nome: "Ana Beatriz Santos Silva",
       curso: "Téc. Desenvolvimento de Sistemas",
-      turma: "3º TDS - Manhã",
-      unidade: "SESI / SENAI",
-      email: "ana.silva@aluno.senai.br",
-      status: "Ativo",
-      frequencia: "98%"
+      turma: "3º Ano A",
+      
     },
     {
       id: 2,
       rm: "RM-2026-0102",
       nome: "Bruno Henrique Oliveira",
       curso: "Téc. Eletroeletrônica",
-      turma: "2º ELE - Tarde",
-      unidade: "SENAI Mirandópolis",
-      email: "bruno.oliveira@aluno.senai.br",
-      status: "Ativo",
-      frequencia: "95%"
+      turma: "3º Ano B ",
+      
     },
     {
       id: 3,
       rm: "RM-2026-0103",
       nome: "Camila Fernandes da Costa",
       curso: "Téc. Desenvolvimento de Sistemas",
-      turma: "3º TDS - Manhã",
-      unidade: "SESI / SENAI",
-      email: "camila.costa@aluno.senai.br",
-      status: "Ativo",
-      frequencia: "100%"
+      turma: "3º Ano A",
+     
     },
     {
       id: 4,
       rm: "RM-2026-0104",
       nome: "Diego Martins Barbosa",
       curso: "Téc. Mecânica Industrial",
-      turma: "1º MEC - Noite",
-      unidade: "SENAI Mirandópolis",
-      email: "diego.barbosa@aluno.senai.br",
-      status: "Ativo",
-      frequencia: "91%"
+      turma: "3º Ano B",
+     
     },
     {
       id: 5,
       rm: "RM-2026-0105",
       nome: "Eduarda Lima Ribeiro",
       curso: "Ensino Fundamental II",
-      turma: "9º Ano A - Manhã",
-      unidade: "SESI Mirandópolis",
-      email: "eduarda.ribeiro@sesisp.org.br",
-      status: "Ativo",
-      frequencia: "97%"
+      turma: "3º Ano B",
+      
     },
     {
       id: 6,
       rm: "RM-2026-0106",
       nome: "Felipe Gabriel de Almeida",
       curso: "Téc. Desenvolvimento de Sistemas",
-      turma: "3º TDS - Manhã",
-      unidade: "SESI / SENAI",
-      email: "felipe.almeida@aluno.senai.br",
-      status: "Ativo",
-      frequencia: "94%"
+      turma: "3º Ano A",
+    
     },
     {
       id: 7,
       rm: "RM-2026-0107",
       nome: "Gabriela Rocha Nogueira",
       curso: "Aprendizagem Mecânica",
-      turma: "Turma B - Tarde",
-      unidade: "SENAI Mirandópolis",
-      email: "gabriela.rocha@aluno.senai.br",
-      status: "Ativo",
-      frequencia: "99%"
+      turma: "3º Ano A",
     }
   ];
 
