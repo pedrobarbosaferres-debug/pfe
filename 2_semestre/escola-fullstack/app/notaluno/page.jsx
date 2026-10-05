@@ -85,9 +85,7 @@ export default function NotaAluno() {
                             <p>Lance as notas e trabalhos do aluno no sistema escolar.</p>
                         </div>
 
-                        <div className={styles.pageIcon}>
-                            📝
-                        </div>
+                       
                     </div>
 
                     {/* Card com Formulário */}

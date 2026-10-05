@@ -53,9 +53,7 @@ export default function ListNota() {
                             </p>
                         </div>
 
-                        <div className={styles.pageIcon}>
-                            📝
-                        </div>
+                        
                     </div>
 
                     {/* Card */}

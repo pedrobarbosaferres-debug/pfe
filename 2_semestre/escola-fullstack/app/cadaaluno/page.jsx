@@ -14,13 +14,97 @@ export default function CadastrarAluno() {
     const [ra, setRa] = useState("");
     const [mensagem, setMensagem] = useState("");
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
-        setMensagem("Aluno cadastrado com sucesso!");
-        setTimeout(() => {
-            router.push("/listaaluno");
-        }, 1200);
+
+        try {
+            // Envia os dados para a rota da API (/api/alunos)
+            const response = await fetch('/api/alunos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ nome, idade, serie, ra }),
+            });
+
+            if (response.ok) {
+                setMensagem("Aluno cadastrado com sucesso!");
+                setTimeout(() => {
+                    router.push("/listaaluno");
+                }, 1200);
+            } else {
+                alert("Erro ao cadastrar aluno no banco de dados.");
+            }
+        } catch (error) {
+            console.error("Erro ao enviar dados:", error);
+            alert("Erro de conexão ao cadastrar aluno.");
+        }
     }
+
+    async function handleEditar() {
+        if (!ra) {
+            alert("Informe o RA do aluno que deseja editar.");
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/alunos', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ nome, idade, serie, ra }),
+            });
+
+            if (response.ok) {
+                setMensagem("Aluno editado com sucesso!");
+                setTimeout(() => {
+                    router.push("/listaaluno");
+                }, 1200);
+            } else {
+                alert("Erro ao editar aluno. Verifique se o RA está correto.");
+            }
+        } catch (error) {
+            console.error("Erro ao editar dados:", error);
+            alert("Erro de conexão ao editar aluno.");
+        }
+    }
+
+    async function handleExcluir() {
+        if (!ra) {
+            alert("Informe o RA do aluno que deseja excluir.");
+            return;
+        }
+
+        if (!confirm("Tem certeza que deseja excluir o aluno com este RA?")) return;
+
+        try {
+            const response = await fetch('/api/alunos', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ ra }),
+            });
+
+            if (response.ok) {
+                setMensagem("Aluno excluído com sucesso!");
+                setNome("");
+                setIdade("");
+                setSerie("");
+                setRa("");
+                setTimeout(() => {
+                    router.push("/listaaluno");
+                }, 1200);
+            } else {
+                alert("Erro ao excluir aluno. Verifique se o RA está correto.");
+            }
+        } catch (error) {
+            console.error("Erro ao excluir aluno:", error);
+            alert("Erro de conexão ao excluir aluno.");
+        }
+    }
+
 
     return (
         <>
@@ -34,7 +118,7 @@ export default function CadastrarAluno() {
                             <h2>Cadastro de Aluno</h2>
                             <p>Cadastre um novo aluno no sistema escolar.</p>
                         </div>
-                        <div className={styles.pageIcon}>👨‍🎓</div>
+                       
                     </div>
 
                     <section className={styles.card}>
@@ -103,9 +187,25 @@ export default function CadastrarAluno() {
                                 </div>
                             </div>
 
-                            <div className={styles.actions}>
+                            <div className={styles.actions} style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                                 <button type="submit" className={styles.btnSubmit}>
                                     Cadastrar Aluno
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={handleEditar}
+                                    className={styles.btnSubmit}
+                                    style={{ backgroundColor: "#2563eb" }}
+                                >
+                                    Editar
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={handleExcluir}
+                                    className={styles.btnSubmit}
+                                    style={{ backgroundColor: "#ef4444" }}
+                                >
+                                    Excluir
                                 </button>
                                 <Link href="/listaaluno" className={styles.btnBack}>
                                     Ver Lista de Alunos

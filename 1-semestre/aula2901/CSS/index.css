@@ -1,0 +1,61 @@
+:root{
+--cor-fundo-pagina: #02031e;
+--cor-texto-principal: #ffffff;
+}
+
+*{
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--cor-fundo-pagina);
+    background-color: var(--cor-fundo-pagina);
+}
+
+.container-pagina{
+    width: min(1100pc,90%);
+    margin: 0 auto;
+}
+
+.cabecalho-principal{
+    min-height: 70vh;
+    
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(180deg,#16ba10 0%, #111827 60%);
+    padding: clamp(2rem,5vw,5rem)0;
+}
+
+.cabecalho-principal__titulo{
+    font-size: 18pt;
+    color: var(--cor-texto-principal);
+    margin: 0 0 1.5rem;
+}
+
+.cabecalho-principal__subtitulo{
+    font-size: 14pt;
+    color: var(--cor-texto-principal);
+    margin: 0 0 1.5rem;
+}
+.email{
+  background-color: transparent;
+  border-color: white;
+  padding: 10px;
+  width: 200px;
+  text-align: center;
+  border-radius: 15px;
+}
+.formulario{
+    
+    padding: 10px;
+    border-radius: 19px;
+    background-color: blue;
+    color:white;
+    
+}
+.garantia{
+    text-align: center;
+    color: white;
+}

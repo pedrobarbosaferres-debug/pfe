@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS notas(
     t2 REAL NOT NULL,
     nota1 REAL NOT NULL,
     nota2 REAL NOT NULL,
-    nota3 REAL NOT NULL
-    FOREIGN KEY(id_aluno)
+    nota3 REAL NOT NULL,
+    FOREIGN KEY(id_aluno) REFERENCES alunos(id_aluno)
     ON DELETE CASCADE
 );
 `)
