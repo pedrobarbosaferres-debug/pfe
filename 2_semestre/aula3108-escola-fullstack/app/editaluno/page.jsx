@@ -1,7 +1,5 @@
-import EditAlunoPage from './[id]/page';
+import { redirect } from "next/navigation";
 
-export default function EditAluno(){
-    return(
-        <EditAlunoPage />
-    )
+export default function EditAluno() {
+    redirect("/listaluno");
 }

@@ -1,20 +1,13 @@
-'use client';
+"use client";
 
-import { useEffect, useState, use } from "react";
+import { useEffect, useState } from "react";
 import Header from "../../components/header";
 import styles from "./cadaluno.module.css";
-import {redirect} from "next/navigation";
-import { useRouter, useParams, useSearchParams } from "next/navigation";
-import Link from "next/link";
+import { useRouter, useParams } from "next/navigation";
 
-export default function EditAlunoPage({ params: paramsPromise }) {
+export default function EditAlunoPage() {
     const router = useRouter();
-    const routeParams = useParams();
-    const searchParams = useSearchParams();
-
-
-    const resolvedParams = paramsPromise ? use(paramsPromise) : null;
-    const id = resolvedParams?.id || routeParams?.id || searchParams?.get("id");
+    const { id } = useParams();
 
     const [id_aluno, setIdAluno] = useState("")
     const [nome, setNome] = useState("");
@@ -22,81 +15,89 @@ export default function EditAlunoPage({ params: paramsPromise }) {
     const [serie, setSerie] = useState("");
     const [ra, setRa] = useState("");
     const [carregando, setCarregando] = useState(true);
+    const [salvando, setSalvando] = useState(false);
 
 
-   useEffect(() => {
-        if (id) {
-            buscarAluno(id);
-        } else {
-            setCarregando(false);
-        }
-    }, [id]);
+    useEffect(() => {
+        async function buscarAluno() {
+            try {
+                setCarregando(true);
+                const resposta = await fetch(`/api/alunos/${id}`);
 
-    async function buscarAluno(idAluno) {
-        try {
-            setCarregando(true);
-            const resposta = await fetch(`/api/alunos/${idAluno}`);
+                if (!resposta.ok) {
+                    alert("Aluno não encontrado!");
+                    router.push("/listaluno");
+                    return;
+                }
 
-            if (!resposta.ok) {
-                alert("Aluno não encontrado!");
+                const dados = await resposta.json();
+                setIdAluno(dados.id_aluno || "");
+                setNome(dados.nome || "");
+                setIdade(dados.idade ?? "");
+                setSerie(dados.serie || "");
+                setRa(dados.ra ?? "");
+            } catch (erro) {
+                console.error("Erro ao carregar aluno:", erro);
+                alert("Erro ao carregar dados do aluno.");
                 router.push("/listaluno");
-                return;
+            } finally {
+                setCarregando(false);
             }
-
-            const dados = await resposta.json();
-            setIdAluno(dados.id_aluno || "");
-            setNome(dados.nome || "");
-            setIdade(dados.idade || "");
-            setSerie(dados.serie || "");
-            setRa(dados.ra || "");
-        } catch (erro) {
-            console.error("Erro ao carregar aluno:", erro);
-            alert("Erro ao carregar dados do aluno.");
-        } finally {
-            setCarregando(false);
         }
-    }
+
+        buscarAluno();
+    }, [id, router]);
 
     async function editarAluno(event) {
         event.preventDefault();
 
-        if (!id) {
-            alert("ID do aluno não foi encontrado.");
-            return;
-        }
+        try {
+            setSalvando(true);
+            const resposta = await fetch("/api/alunos", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    id_aluno,
+                    nome,
+                    idade,
+                    serie,
+                    ra,
+                }),
+            });
 
-        const resposta = await fetch("/api/alunos", {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                id_aluno,
-                nome,
-                idade,
-                serie,
-                ra,
-            }),
-        });
+            const dados = await resposta.json();
 
-        const dados = await resposta.json();
+            if (!resposta.ok) {
+                alert(dados.erro || "Erro ao editar o aluno.");
+                return;
+            }
 
-        alert(dados.mensagem || dados.erro);
-
-        if (resposta.ok) {
+            alert(dados.mensagem);
             router.push("/listaluno");
+        } catch (erro) {
+            console.error("Erro ao editar aluno:", erro);
+            alert("Erro ao salvar os dados do aluno.");
+        } finally {
+            setSalvando(false);
         }
     }
 
     if (carregando) {
         return (
-            <main className="container">
-                <h1>Editar Aluno</h1>
-                <p>Carregando informações do aluno...</p>
-            </main>
+            <>
+                <Header />
+                <main className={styles.container}>
+                    <p>Carregando informações do aluno...</p>
+                </main>
+            </>
         );
     }
 
+    if (!id_aluno) {
+        return null;
+    }
 
     return (
         <>
@@ -109,17 +110,16 @@ export default function EditAlunoPage({ params: paramsPromise }) {
                     </h2>
 
                     <p className={styles.subtitle}>
-                        Preencha os dados do aluno para realizar o cadastro no sistema.
+                        Atualize os dados do aluno e salve as alterações.
                     </p>
 
                     <form className={styles.form} onSubmit={editarAluno}>
-                          <input type="text" value={id_aluno} onChange={(event) => setIdAluno(event.target.value)} hidden/>
-
                         <div className={styles.inputGroup}>
                             <label htmlFor="nome">Nome</label>
                             <input
                                 id="nome"
                                 type="text"
+                                required
                                 value={nome}
                                 onChange={(e) => setNome(e.target.value)}
                                 placeholder="Digite o nome do aluno"
@@ -131,6 +131,8 @@ export default function EditAlunoPage({ params: paramsPromise }) {
                             <input
                                 id="idade"
                                 type="number"
+                                min="1"
+                                required
                                 value={idade}
                                 onChange={(e) => setIdade(e.target.value)}
                                 placeholder="Digite a idade"
@@ -142,6 +144,7 @@ export default function EditAlunoPage({ params: paramsPromise }) {
                             <input
                                 id="serie"
                                 type="text"
+                                required
                                 value={serie}
                                 onChange={(e) => setSerie(e.target.value)}
                                 placeholder="Digite a série"
@@ -153,14 +156,15 @@ export default function EditAlunoPage({ params: paramsPromise }) {
                             <input
                                 id="ra"
                                 type="number"
+                                required
                                 value={ra}
                                 onChange={(e) => setRa(e.target.value)}
                                 placeholder="Digite o RA"
                             />
                         </div>
 
-                        <button className={styles.button} type="submit">
-                            Editar Aluno
+                        <button className={styles.button} type="submit" disabled={salvando}>
+                            {salvando ? "Salvando..." : "Salvar alterações"}
                         </button>
                     </form>
                 </div>

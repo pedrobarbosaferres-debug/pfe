@@ -1,56 +1,74 @@
-import db from "../../db/banco";
 import { NextResponse } from "next/server";
-//listar notas ordenando pelo nome
-export async function listNotas(){
-    const notas = db.prepare(`SELECT notas.id, notas.t1, notas.t2, notas.n1, notas.n2, notas.n3, alunos.nome, alunos.ra FROM notas 
-    INNER JOIN alunos
-    ON notas.id_aluno = alunos.id_aluno
-    ORDER BY alunos.nome`).all();
-    return NextResponse.json(notas)
+import db from "../../db/banco";
+
+export async function GET() {
+  try {
+    const notas = db.prepare(`
+      SELECT notas.id_nota, notas.id_aluno, notas.t1, notas.t2,
+        notas.n1, notas.n2, notas.n3, alunos.nome, alunos.ra
+      FROM notas
+      INNER JOIN alunos ON notas.id_aluno = alunos.id_aluno
+      ORDER BY alunos.nome
+    `).all();
+
+    return NextResponse.json(notas);
+  } catch (erro) {
+    console.error("Erro ao buscar notas:", erro);
+    return NextResponse.json(
+      { erro: "Erro ao buscar as notas." },
+      { status: 500 }
+    );
+  }
 }
 
-export async function salvaNotas(request){
-    try {
-        const dados = await request.json();
-        const sql = db.prepare(`INSERT INTO notas (id_aluno, t1,t2,n1,n2,n3) VALUES (?,?,?,?,?,?)`);
-        sql.run(dados.id_aluno, dados.t1,dados.t2, dados.n1,dados.n2,dados.n3)
-        return NextResponse.json({
-            mensagem: "Nota cadastrada com sucesso!"
-        })
-    } catch (error) {
-        console.error('Erro ao realizar o cadastro', error)
+export async function POST(request) {
+  try {
+    const dados = await request.json();
+    const idAluno = Number(dados.id_aluno);
+    const valoresNotas = [dados.t1, dados.t2, dados.n1, dados.n2, dados.n3];
+    const notas = valoresNotas.map(Number);
+
+    if (
+      !Number.isInteger(idAluno) ||
+      valoresNotas.some((valor) => valor === "" || valor === null || valor === undefined) ||
+      notas.some((nota) => !Number.isFinite(nota) || nota < 0 || nota > 10)
+    ) {
+      return NextResponse.json(
+        { erro: "Informe um aluno e notas válidas entre 0 e 10." },
+        { status: 400 }
+      );
     }
-}
 
-export async function editAluno(request) {
-    try {
-        const dados = await request.json();
-        const sql = db.prepare(`
-            UPDATE alunos
-            SET nome = ?, idade = ?, serie = ?, ra = ?
-            WHERE id_aluno = ?
-        `);
-        sql.run(dados.nome, dados.idade, dados.serie, dados.ra, dados.id_aluno);
-        return NextResponse.json({
-            mensagem: "Aluno atualizado com sucesso!"
-        });
-    } catch (error) {
-        console.error('Erro ao editar o aluno ', error);
-        return NextResponse.json({ erro: "Erro ao editar o aluno." }, { status: 500 });
-    };
-}
+    const aluno = db.prepare("SELECT id_aluno FROM alunos WHERE id_aluno = ?").get(idAluno);
+    if (!aluno) {
+      return NextResponse.json(
+        { erro: "Aluno não encontrado." },
+        { status: 404 }
+      );
+    }
 
-// excluir aluno pelo id_aluno
-export async function excluiAluno(request) {
-    try {
-        const dados = await request.json();
-        const sql = db.prepare(`DELETE FROM alunos WHERE id_aluno = ?`);
-        sql.run(dados.id_aluno);
-        return NextResponse.json({
-            mensagem: "Aluno excluído com sucesso!"
-        });
-    } catch (error) {
-        console.error('Erro ao excluir o aluno ', error);
-        return NextResponse.json({ erro: "Erro ao excluir o aluno." }, { status: 500 });
-    };
+    const sql = db.prepare(`
+      INSERT INTO notas (id_aluno, t1, t2, n1, n2, n3)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `);
+    sql.run(idAluno, ...notas);
+
+    return NextResponse.json(
+      { mensagem: "Notas cadastradas com sucesso!" },
+      { status: 201 }
+    );
+  } catch (erro) {
+    if (erro.code === "SQLITE_CONSTRAINT_UNIQUE") {
+      return NextResponse.json(
+        { erro: "Este aluno já possui notas cadastradas." },
+        { status: 409 }
+      );
+    }
+
+    console.error("Erro ao cadastrar notas:", erro);
+    return NextResponse.json(
+      { erro: "Erro ao cadastrar as notas." },
+      { status: 500 }
+    );
+  }
 }

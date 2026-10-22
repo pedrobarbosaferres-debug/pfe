@@ -1,0 +1,117 @@
+.container {
+    min-height: calc(100vh - 90px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+    background: radial-gradient(circle at top left, #1a1a40, #090916 70%);
+}
+
+.card {
+    width: 100%;
+    max-width: 700px;
+    padding: 3rem;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(0, 247, 255, 0.3);
+    box-shadow: 0 0 10px rgba(0, 247, 255, 0.3), 0 0 20px rgba(138, 43, 226, 0.4);
+}
+
+.title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(90deg, #00f7ff, #8a2be2);
+    background-clip: text;
+    color: transparent;
+}
+
+.subtitle {
+    text-align: center;
+    color: #cfcfff;
+    margin-bottom: 2rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.inputGroup label {
+    color: #00f7ff;
+    font-weight: 600;
+}
+
+.inputGroup input,
+.inputGroup select {
+    padding: 1rem;
+    border-radius: 12px;
+    background: #17172a;
+    border: 1px solid rgba(138, 43, 226, 0.5);
+    color: white;
+    outline: none;
+}
+
+.inputGroup input:focus,
+.inputGroup select:focus {
+    border-color: #00f7ff;
+    box-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
+}
+
+.button {
+    margin-top: 0.5rem;
+    padding: 1rem;
+    border: none;
+    border-radius: 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    background: linear-gradient(135deg, #00f7ff, #8a2be2);
+}
+
+.button:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
+.error,
+.success,
+.notice {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.error {
+    color: #ff8b8b;
+}
+
+.success {
+    color: #70ffb0;
+}
+
+.notice {
+    color: #cfcfff;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+}
